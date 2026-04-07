@@ -15,7 +15,9 @@ public class EmailSendConsumer {
     ) // email-send-group 이라는 컨슈머 그룹으로 email.send 토픽의 메시지를 읽어들이겠다. ( email-send-group 이 kafka 에 기존에 생성된 컨슈머 그룹에 없다면, 해당 컨슈머 그룹을 생성해서 메시지를 읽어들인다. 만약 이미 있다면, 기존 생성된 컨슈머 그룹을 활용해서 메시지를 읽는다. )
     @RetryableTopic(
             attempts = "5", // 총 시도 가능 횟수 (최초 시도 포함)
-            backoff = @Backoff(delay = 1000, multiplier = 2) // 재시도를 하는 간격 설정 ( 1초 단위로 재시도 하는데, 그 다음번 재시도는 *2배 이후에 시도하겠다. -> ex. 첫 재시도는 1초후, 두번째 재시도는 2초후, 세번째 재시도는 4초후, 네번째 재시도는 8초후, ... )
+            backoff = @Backoff(delay = 1000, multiplier = 2), // 재시도를 하는 간격 설정 ( 1초 단위로 재시도 하는데, 그 다음번 재시도는 *2배 이후에 시도하겠다. -> ex. 첫 재시도는 1초후, 두번째 재시도는 2초후, 세번째 재시도는 4초후, 네번째 재시도는 8초후, ... )
+            // DLT 토픽 이름에 붙일 접미사
+            dltTopicSuffix = ".dlt"
     )
     public void consume(String message) {
         System.out.println("Kafka로 부터 받아온 메시지: " + message);
