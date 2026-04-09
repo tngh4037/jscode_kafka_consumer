@@ -3,7 +3,10 @@ server:
 spring:
   kafka:
     # Kafka 서버 주소 (EC2에 카프카를 설치했기 때문에 EC2 주소를 입력해야 한다.)
-    bootstrap-servers: ${KAFKA_EC2_ADDRESS}:9092 # 환경변수로 입력하도록 했다.
+    bootstrap-servers:
+      - ${KAFKA_EC2_ADDRESS}:9092
+      - ${KAFKA_EC2_ADDRESS}:19092
+      - ${KAFKA_EC2_ADDRESS}:29092
     consumer:
       # 메시지의 key 역직렬화 방식 : Kafka에서 받아온 메시지를 String으로 변환
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
